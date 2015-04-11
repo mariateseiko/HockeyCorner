@@ -19,28 +19,53 @@
 				<div id="main-text">Choose your team</div></br>
 
 				<div id="teamNav">
-				<a shape="rect" ng-repeat= "team in teams" ng-class="team.abbr" ng-click="displayTeam(team.abbr, team.name)"></a>
+				<a shape="rect" ng-repeat= "team in teams" ng-class="team.abbr" ng-click="displayTeam($index)"></a>
 				</div>
-				<div id="chosenTeam" ng-show="havePlayers">{{teamName}}</div>
+				<div id="chosenTeam" ng-show="havePlayers" ng-click="displayTeam((teamIndex+1)%30)">{{teamName}}</div>
 				<div id="playersNav">
 				<ul>
-				<li ng-click="setTab(1)" ng-show="havePlayers">Goalies</li>
-				<li ng-click="setTab(3)" ng-show="havePlayers">Defensemen</li>
-				<li ng-click="setTab(2)" ng-show="havePlayers">Forwards</li>
+				<li ng-click="setTab(1)" ng-show="havePlayers" ng-class="{activeTab: isSet(1)}">Goalies</li>
+				<li ng-click="setTab(3)" ng-show="havePlayers" ng-class="{activeTab: isSet(3)}">Defensemen</li>
+				<li ng-click="setTab(2)" ng-show="havePlayers" ng-class="{activeTab: isSet(2)}">Forwards</li>
 				</ul>
 				</div>
-				
-				<div >
-					<div style="float: left" ng-show="havePlayers">
-					<ul >
-		  				<li ng-repeat="x in position" ng-init="position = positions[0]" style="float: left; margin-right: 10px; list-style: none;  width: 400px ">
- 							<img src = {{x.imageUrl}}>
-    						{{ x.name + ', ' + x.age}}
+				<div class="playerProfile"  ng-show="havePlayers" >
+					<ul style="list-style-type: none; padding-left: 0" >
+		  				<li  ng-repeat="x in position" ng-init="position = positions[0]" >
+ 							<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
+ 							<div class="playerHeader">
+ 								<img class="teamLogo" src={{logoUrl}}>
+ 								<div class="playerName"> 
+ 									<div>{{ x.name + ', ' + x.age}}</div>
+ 									<div class="playerBaseInfo">{{teamName}} {{x.position}}</div>
+ 								</div>
+ 							</div>
+ 							<div class="playerInfo"><table>
+ 								<tr >
+ 									<td class="label">NUMBER</td>
+ 									<td class="value">{{x.number}}</td>
+ 									<td class="label">BIRTHPLACE</td>
+ 									<td class="value">{{x.birthplace}}</td>
+ 								</tr>
+ 								<tr >
+ 									<td class="label">HEIGT</td>
+ 									<td class="value">{{x.height}}</td>
+ 									<td class="label">BIRTHDATE</td>
+ 									<td class="value">{{x.birthdate}}</td>
+ 								</tr>
+ 								<tr >
+ 									<td class="label">WEIGHT</td>
+ 									<td class="value">{{x.weight}}</td>
+ 									<td class="label">AGE</td>
+ 									<td class="value">{{x.age}}</td>
+ 								</tr>
+ 							</table></div>
+    						
 		  				</li>
 					</ul>
-					</div >
+				</div >
 
-				</div>
+				
 			</div>
 		
 	</div>

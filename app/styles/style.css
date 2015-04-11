@@ -11,9 +11,9 @@ body {
 	font-family: 'Lato', sans-serif; 
 	font-size: 30px;  line-height: 25px;
 	text-align: center;
-	margin: 20px auto 0px auto;	background: #4C463E;
+	margin: 20px auto 0px auto;	background: #B2A99A;
 	border-radius: 6px;
-	color: #B2A99A;
+	color: #4C463E;
 	padding: 15px;
 	font-weight: 600;
 	letter-spacing: -1px;
@@ -33,9 +33,9 @@ body {
 	
 }
 #chosenTeam {
-	background: #4C463E;
+	background: #B2A99A;
 	border-radius: 6px;
-	color: #B2A99A;
+	color: #4C463E;
 	margin-top: 15px;
 	
 	font-size: 25px;
@@ -43,9 +43,19 @@ body {
 	text-align: center;
 }
 #playersNav ul {
-	list-style-type: none;  text-align: center; color: #B2A99A; margin-top: 20px;
+	list-style-type: none;  text-align: center;  margin-top: 20px;color: #4C463E;
+	
 }
 #playersNav ul li {
+	background: #B2A99A;
+	border-radius: 6px;
+	font-weight: 700;
+	padding: 5px 10px ;
+	display: inline; 
+	margin-right: 15px
+}
+#playersNav ul li.activeTab {
+	color: #B2A99A;
 	background: #4C463E;
 	border-radius: 6px;
 	font-weight: 700;
@@ -53,6 +63,16 @@ body {
 	display: inline; 
 	margin-right: 15px
 }
+#playersNav ul li:hover {
+	color: #B2A99A;
+	background: #4C463E;
+	border-radius: 6px;
+	font-weight: 700;
+	padding: 5px 10px ;
+	display: inline; 
+	margin-right: 15px
+}
+
 #playersNav ul li:last-child {
 	display: inline; margin-right: 35px
 }
@@ -99,5 +119,74 @@ h2 {
 h3 {
 	font-size: 18px;
 	color: #FFF;
+}
+.playerPhoto {
+	float: left;
+border: 3px solid #4C463E;
+border-radius: 5px;
+margin-right: 5px;
+}
+.playerHeader {
+	float: left;
+	padding-bottom: 5px;
+	border-bottom: 1px solid  #4C463E;
+	width: 800px;
+
+}/*
+.playerProfile {
+	float: left;
+}*/
+.playerProfile ul li {
+	width: 940px;
+	border: 2px solid #4C463E;
+	color: #4C463E;
+	background: #B2A99A;
+	border-radius: 6px;
+	font-weight: 700;
+	
+	margin-bottom: 3px;
+	padding: 5px;
+	height: 160px;
+}
+.teamLogo {
+	float: left;
+	margin-right: 5px;
+}
+
+.playerName {
+	
+
+	font-size: 20px;
+	font-weight: 600;
+	
+	margin: 2px;
+
+}
+
+.playerBaseInfo {
+	font-size: 15px;
+	margin-top:5px;
+	
+}
+
+.playerInfo {
+	float: left;
+	margin-top: 7px;
+}
+
+.label {
+	
+	color: #B2A99A;
+	background: #4C463E;
+	border-radius: 6px;
+	font-weight: 700;
+	padding: 5px ;
+	
+	
+}
+.value {
+	color: #333a42 ;
+	padding-right: 25px;
+	padding-left: 5px;
 }
 

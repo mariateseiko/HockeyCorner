@@ -7,7 +7,7 @@ app.controller('playersCtrl', function($scope, $http) {
    'WPG',  'WSH'];*/
    		$scope.teams = [{
 		"name": "Anaheim Ducks",
-		"abbr": "ANA"
+		"abbr": "ANA",
 	},	{
 		"name": "Arizona Coyotes",
 		"abbr": "ARI"
@@ -110,16 +110,35 @@ app.controller('playersCtrl', function($scope, $http) {
 		$scope.getPosition = function() {
 			return position;
 		};
-		$scope.displayTeam = function(teamAbbr, teamName) {
-    		$http.get('http://crossorigin.me/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+teamAbbr+'/iphone/clubroster.json')
+		$scope.displayTeam = function(index) {
+			$scope.teamAbbr = $scope.teams[index].abbr;
+    		$http.get('http://crossorigin.me/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+$scope.teamAbbr+'/iphone/clubroster.json')
   			.success(function (response) {
-  				$scope.teamName = teamName;
+  				
+  				 
+  				$scope.teamName = $scope.teams[index].name;;
   				$scope.games = response; 
   				this.positions = [$scope.games.goalie, $scope.games.forwards, $scope.games.defensemen]; 
   				$scope.havePlayers = true; 
-  				$scope.position = positions[0];
+  				$scope.teamIndex = index;
+  				$scope.setTab(1);
+  				console.log(index);
+  				$scope.logoUrl = 'http://1.cdn.nhle.com/'+$scope.getShortName($scope.teamName)+'/images/logos/large.png';
   			});
 		};
+		$scope.getShortName = function(teamName) {
+			lastWord = teamName.split(" ").pop().toLowerCase();
+			switch(lastWord) {
+				case "jackets": 
+					return "bluejackets";
+				case "wings":
+					return "redwings";
+				case "leafs":
+					return "mapleleafs";
+				default:
+					return lastWord;
+			}
+		}
 });	
 
 
