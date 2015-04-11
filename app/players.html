@@ -1,0 +1,36 @@
+<div class="playerProfile"  ng-show="havePlayers" >
+	<ul style="list-style-type: none; padding-left: 0" >
+		<li  ng-repeat="x in position" ng-init="position = positions[0]" >
+ 			<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
+ 			<div class="playerHeader">
+ 				<img class="teamLogo" src={{logoUrl}}>
+ 				<div class="playerName"> 
+ 					<div>{{ x.name}}</div>
+ 					<div class="playerBaseInfo">{{teamName}} {{x.position}}</div>
+ 				</div>
+ 			</div>
+ 			<div class="playerInfo">
+ 			<table>
+ 			<tr >
+ 				<td class="label">NUMBER</td>
+ 				<td class="value">{{x.number}}</td>
+ 				<td class="label">BIRTHPLACE</td>
+ 				<td class="value">{{x.birthplace}}</td>
+ 			</tr>
+ 			<tr >
+ 				<td class="label">HEIGT</td>
+ 				<td class="value">{{x.height}}</td>
+ 				<td class="label">BIRTHDATE</td>
+ 				<td class="value">{{x.birthdate}}</td>
+ 			</tr>
+ 			<tr >
+ 				<td class="label">WEIGHT</td>
+ 				<td class="value">{{x.weight}}</td>
+ 				<td class="label">AGE</td>
+ 				<td class="value">{{x.age}}</td>
+ 			</tr>
+ 			</table>
+ 			</div>			
+		</li>
+	</ul>
+</div >

@@ -1,11 +1,8 @@
 (function () {
-var app = angular.module('hockeyCornerApp', []);
+var app = angular.module('hockeyCornerApp', ['app-directives']);
 
 app.controller('playersCtrl', function($scope, $http) {
-	/*$scope.teams =  ['ANA', 'ARI', 'BOS', 'BUF', 'CAR', 'CBJ', 'CGY', 'CHI', 'COL', 'DAL', 'DET', 'EDM', 'FLA', 'LAK',
-   'MIN', 'MTL', 'NJD', 'NYR', 'OTT', 'PHI', 'PIT', 'SJS', 'STL', 'TBL', 'TOR', 'VAN',
-   'WPG',  'WSH'];*/
-   		$scope.teams = [{
+	$scope.teams = [{
 		"name": "Anaheim Ducks",
 		"abbr": "ANA",
 	},	{
@@ -112,10 +109,9 @@ app.controller('playersCtrl', function($scope, $http) {
 		};
 		$scope.displayTeam = function(index) {
 			$scope.teamAbbr = $scope.teams[index].abbr;
-    		$http.get('http://crossorigin.me/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+$scope.teamAbbr+'/iphone/clubroster.json')
+    		$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+$scope.teamAbbr+'/iphone/clubroster.json')
   			.success(function (response) {
-  				
-  				 
+  					 
   				$scope.teamName = $scope.teams[index].name;;
   				$scope.games = response; 
   				this.positions = [$scope.games.goalie, $scope.games.forwards, $scope.games.defensemen]; 
@@ -138,7 +134,7 @@ app.controller('playersCtrl', function($scope, $http) {
 				default:
 					return lastWord;
 			}
-		}
+		};
 });	
 
 

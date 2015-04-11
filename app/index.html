@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 <link rel="stylesheet" href="styles/style.css">
 <link rel="stylesheet" href="styles/team-styles.css">
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
 </head>
 
 <body ng-app="hockeyCornerApp">
@@ -29,41 +30,14 @@
 				<li ng-click="setTab(2)" ng-show="havePlayers" ng-class="{activeTab: isSet(2)}">Forwards</li>
 				</ul>
 				</div>
-				<div class="playerProfile"  ng-show="havePlayers" >
-					<ul style="list-style-type: none; padding-left: 0" >
-		  				<li  ng-repeat="x in position" ng-init="position = positions[0]" >
- 							<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
- 							<div class="playerHeader">
- 								<img class="teamLogo" src={{logoUrl}}>
- 								<div class="playerName"> 
- 									<div>{{ x.name + ', ' + x.age}}</div>
- 									<div class="playerBaseInfo">{{teamName}} {{x.position}}</div>
- 								</div>
- 							</div>
- 							<div class="playerInfo"><table>
- 								<tr >
- 									<td class="label">NUMBER</td>
- 									<td class="value">{{x.number}}</td>
- 									<td class="label">BIRTHPLACE</td>
- 									<td class="value">{{x.birthplace}}</td>
- 								</tr>
- 								<tr >
- 									<td class="label">HEIGT</td>
- 									<td class="value">{{x.height}}</td>
- 									<td class="label">BIRTHDATE</td>
- 									<td class="value">{{x.birthdate}}</td>
- 								</tr>
- 								<tr >
- 									<td class="label">WEIGHT</td>
- 									<td class="value">{{x.weight}}</td>
- 									<td class="label">AGE</td>
- 									<td class="value">{{x.age}}</td>
- 								</tr>
- 							</table></div>
-    						
-		  				</li>
-					</ul>
-				</div >
+				<div id="playersNav">
+				<ul>
+				<li  ng-show="havePlayers" >Show Stats</li>
+				<li  ng-show="havePlayers" >Hide Stats</li>
+				
+				</ul>
+				</div>
+				<players></players>
 
 				
 			</div>
@@ -71,6 +45,6 @@
 	</div>
 
 <script src="scripts/app.js"></script>
-
+<script src="scripts/directives.js"></script>
 </body>
 </html>
