@@ -30,8 +30,8 @@ body {
 #main {
 	width: 960px;
 	margin: 10px auto;
-	
 }
+
 #chosenTeam {
 	background: #B2A99A;
 	border-radius: 6px;
@@ -42,42 +42,50 @@ body {
 	font-weight: 700;
 	text-align: center;
 }
-#playersNav ul {
-	list-style-type: none;  text-align: center;  margin-top: 20px;color: #4C463E;
-	
-	
+.nav  {
+	margin-top: 10px;
+	color: #4C463E;
+	border: 3px solid #4C463E;
+	padding: 10px 10px;
+	border-radius: 7px;
+	float: left;
+	margin-right: 3px;
+	text-align: center;
+	margin-bottom: 10px;
 }
-#playersNav ul li {
+.nav:last-child {
+	margin-right: 0px;
+}
+.nav div{
 	background: #B2A99A;
 	border-radius: 6px;
 	font-weight: 700;
-	padding: 5px 10px ;
+	padding: 5px 8px ;
 	display: inline; 
 	margin-right: 15px
 }
-#playersNav ul li.activeTab {
+.nav div.activeTab {
 	color: #B2A99A;
 	background: #4C463E;
-	border-radius: 6px;
-	font-weight: 700;
-	padding: 5px 10px ;
-	display: inline; 
-	margin-right: 15px
 }
-#playersNav ul li:hover {
+.nav div:hover {
 	color: #B2A99A;
 	background: #4C463E;
-	border-radius: 6px;
-	font-weight: 700;
-	padding: 5px 10px ;
-	display: inline; 
-	margin-right: 15px
+}
+.nav div:last-child{
+	margin-right: 0px
 }
 
-#playersNav ul li:last-child {
-	display: inline; margin-right: 35px
+#playersNav {
+	width: 330px;
 }
-
+#statsNav {
+	width: 222px;
+}
+#filtersNav {
+	width: 323px;
+	margin-right: 0px;
+}
 #header {
 	background: #FFF;
 	height: 75px;
@@ -95,7 +103,6 @@ body {
 	font-size: 50px;
 	line-height: 50px;
 	margin-right: 10px;
-	
 	text-transform: uppercase;
 }
 	
@@ -108,35 +115,21 @@ body {
 	font-weight: 700;
 }
 
-h2 {
-	font-size: 34px;
-	line-height: 34px;
-	border-bottom: 1px solid #5C6065;
-	padding-bottom: 5px;
-	margin-bottom: 2px;
-	color: #FFF;
-}
-
-h3 {
-	font-size: 18px;
-	color: #FFF;
-}
 .playerPhoto {
 	float: left;
-border: 3px solid #4C463E;
-border-radius: 5px;
-margin-right: 5px;
+	border: 3px solid #4C463E;
+	border-radius: 5px;
+	margin-right: 5px;
+	height: 150px;
 }
+
 .playerHeader {
 	float: left;
 	padding-bottom: 5px;
 	border-bottom: 1px solid  #4C463E;
 	width: 800px;
+}
 
-}/*
-.playerProfile {
-	float: left;
-}*/
 .playerProfile ul li {
 	width: 940px;
 	border: 2px solid #4C463E;
@@ -144,7 +137,6 @@ margin-right: 5px;
 	background: #B2A99A;
 	border-radius: 6px;
 	font-weight: 700;
-	
 	margin-bottom: 3px;
 	padding: 5px;
 	height: 160px;
@@ -155,19 +147,14 @@ margin-right: 5px;
 }
 
 .playerName {
-	
-
 	font-size: 20px;
 	font-weight: 600;
-	
 	margin: 2px;
-
 }
 
 .playerBaseInfo {
 	font-size: 15px;
 	margin-top:5px;
-	
 }
 
 .playerInfo {
@@ -176,15 +163,13 @@ margin-right: 5px;
 }
 
 .label {
-	
 	color: #B2A99A;
 	background: #4C463E;
 	border-radius: 6px;
 	font-weight: 700;
 	padding: 5px ;
-	
-	
 }
+
 .value {
 	color: #333a42 ;
 	padding-right: 25px;

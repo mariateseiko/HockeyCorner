@@ -1,5 +1,8 @@
 (function () {
-var app = angular.module('hockeyCornerApp', ['app-directives']);
+var app = angular.module('hockeyCornerApp', ['app-directives', 'app-controllers']);
+
+
+
 
 app.controller('playersCtrl', function($scope, $http) {
 	$scope.teams = [{
@@ -136,6 +139,7 @@ app.controller('playersCtrl', function($scope, $http) {
 			}
 		};
 });	
+
 
 
 })();

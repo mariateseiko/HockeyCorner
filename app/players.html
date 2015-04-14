@@ -1,6 +1,8 @@
 <div class="playerProfile"  ng-show="havePlayers" >
+
 	<ul style="list-style-type: none; padding-left: 0" >
-		<li  ng-repeat="x in position" ng-init="position = positions[0]" >
+
+		<li  ng-repeat="x in position" ng-init="position = positions[0]"  >
  			<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
  			<div class="playerHeader">
  				<img class="teamLogo" src={{logoUrl}}>
@@ -30,6 +32,7 @@
  				<td class="value">{{x.age}}</td>
  			</tr>
  			</table>
+ 			
  			</div>			
 		</li>
 	</ul>
