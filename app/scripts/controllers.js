@@ -149,7 +149,7 @@ app.controller('tabsCtrl', function($scope, $http) {
 		$scope.$parent.position = $scope.$parent.positions[activeTab - 1];
 	};
 	$scope.isSetStats = function(checkTab) {
-		return positionsTab === checkTab;
+		return statsTab === checkTab;
 	};
 	$scope.setTabStats = function(activeTab) {
 		statsTab = activeTab;

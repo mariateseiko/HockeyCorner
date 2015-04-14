@@ -33,10 +33,10 @@
 			</div>
 			<div ng-controller="sortCtrl">
 			<div class="nav" id="filtersNav"      >
-				<div  ng-click="reverseAge = !reverseAge; order('age', reverseAge); setTabSort(1)" ng-class="{activeTab: isSetStats(1)}">Age</div >
-				<div  ng-click="reverseName = !reverseName; order('name', reverseName); setTabSort(2)" ng-class="{activeTab: isSetStats(2)}">Name</div >
-				<div   ng-click="reverseWeight = !reverseWeight; order('weight', reverseWeight); setTabSort(3)" ng-class="{activeTab: isSetStats(3)}">Weight</div >
-				<div  ng-click="reverseHeight = !reverseHeight; order('height', reverseHeight); setTabSort(4)" ng-class="{activeTab: isSetStats(4)}">Height</div >	
+				<div  ng-click="reverseAge = !reverseAge; order('age', reverseAge); setTabSort(1)" ng-class="{activeTab: isSetSort(1)}">Age</div >
+				<div  ng-click="reverseName = !reverseName; order('name', reverseName); setTabSort(2)" ng-class="{activeTab: isSetSort(2)}">Name</div >
+				<div   ng-click="reverseWeight = !reverseWeight; order('weight', reverseWeight); setTabSort(3)" ng-class="{activeTab: isSetSort(3)}">Weight</div >
+				<div  ng-click="reverseHeight = !reverseHeight; order('height', reverseHeight); setTabSort(4)" ng-class="{activeTab: isSetSort(4)}">Height</div >	
 			</div>
 			</br></br></br>
 			<players></players>
