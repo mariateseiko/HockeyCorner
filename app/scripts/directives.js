@@ -7,4 +7,9 @@ app.directive("players", function() {
 	}
 });
 
-
+app.directive("stats", function() {
+	return {
+		restrict: "E",
+		templateUrl: "./stats.html"
+	}
+});
