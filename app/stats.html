@@ -1,3 +1,4 @@
+ <table ng-show="isSetStats(1) && isSetPosition(1)"style="float:right">
  <tr >
  	<td class="label">GP</td>
  	<td class="value">{{x.GP}}</td>
@@ -23,5 +24,30 @@
 	<td class="value">{{x.GAA}}</td>
 </tr>
 </table>
-
+<table ng-show="isSetStats(1) && !isSetPosition(1)"style="float:right">
+ <tr >
+ 	<td class="label">GP</td>
+ 	<td class="value">{{x.GP}}</td>
+ 	<td class="label">G</td>
+ 	<td class="value">{{x.G}}</td>
+ 	<td class="label">A</td>
+ 	<td class="value">{{x.A}}</td>
+</tr>
+<tr  >
+ 	<td class="label">P</td>
+ 	<td class="value">{{x.P}}</td>
+ 	<td class="label">PM</td>
+ 	<td class="value">{{x.PM}}</td>
+ 	<td class="label">PIM</td>
+ 	<td class="value">{{x.PIM}}</td>
+</tr>
+<tr >
+	<td class="label">S</td>
+	<td class="value">{{x.S}}</td>
+	<td class="label">TOI</td>
+	<td class="value">{{x.TOI}}</td>
+	<td class="label">GWG</td>
+	<td class="value">{{x.GWG}}</td>
+</tr>
+</table>
 
