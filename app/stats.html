@@ -1,12 +1,28 @@
-<div  class="playerInfo" ng-show="isSetStats(1)">
- 			<table>
- 			<tr >
- 				<td class="label">GP</td>
- 				<td class="value">{{x.GP}}</td>
- 				<td class="label">MIN</td>
- 				<td class="value">{{x.MIN}}</td>
- 			</tr>
- 			
- 			</table>
-</div>
+ <table ng-show="isSetStats(1)" style="float:right">
+ <tr >
+ 	<td class="label">GP</td>
+ 	<td class="value">{{x.GP}}</td>
+ 	<td class="label">W</td>
+ 	<td class="value">{{x.W}}</td>
+ 	<td class="label">L</td>
+ 	<td class="value">{{x.L}}</td>
+</tr>
+<tr  >
+ 	<td class="label">MIN</td>
+ 	<td class="value">{{x.MIN}}</td>
+ 	<td class="label">GA</td>
+ 	<td class="value">{{x.GA}}</td>
+ 	<td class="label">SA</td>
+ 	<td class="value">{{x.SA}}</td>
+</tr>
+<tr >
+	<td class="label">SV</td>
+	<td class="value">{{x.SV}}</td>
+	<td class="label">SV%</td>
+	<td class="value">{{x.SVpc}}</td>
+	<td class="label">GAA</td>
+	<td class="value">{{x.GAA}}</td>
+</tr>
+</table>
+
 

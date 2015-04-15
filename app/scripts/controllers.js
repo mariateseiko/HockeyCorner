@@ -144,7 +144,7 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 					var data = goalies[j].data;
 					var stats = data.split(",");
 					console.log(stats);
-					for (var k = 0; k < goalieKeys.length; k++)
+					for (var k = 3; k < goalieKeys.length; k++)
 						positions[0][i][goalieKeys[k]] = stats[k];
 					break;
 				}
@@ -154,7 +154,7 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 				if (positions[l][i].id == skaters[j].id) {
 					var data = skaters[j].data;
 					var stats = data.split(",");
-					for (var k = 0; k < skatersKeys.lenght; k++)
+					for (var k = 3; k < skatersKeys.lenght; k++)
 						positions[l][i][skatersKeys[k]] = stats[k];
 					break;
 				}
@@ -204,18 +204,3 @@ app.controller('tabsCtrl', function($scope, $http) {
 	
 });	
 
-
-/*
-app.controller('statsCtrl', function($scope, $http) {
-	var currentTeam = $scope.teamAbbr;
-
-	$scope.getStats = function() {
-		$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/playerstatsline/20142015/2/'+$scope.teamAbbr+'/iphone/playerstatsline.json')
-  		.success(function (response) {
-  			$scope.playersStats = response.skatersData;
-  			$scope.goalieStats = response.goalieData;
-  			
-  		});
-	}
-		
-});*/	
