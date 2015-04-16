@@ -6,8 +6,12 @@ app.controller('sortCtrl', ['$scope', '$filter', function($scope, $filter) {
 	$scope.reverseName = false;
 	$scope.reverseWeight = false;
 	$scope.reverseHeight = false;
-	$scope.order = function( predicate, reverse) {
-		$scope.$parent.position = orderBy($scope.$parent.position, predicate, reverse);
+	$scope.order = function( predicate, reverse, positions) {
+		positions[0] = orderBy(positions[0], predicate, reverse);
+		positions[1] = orderBy(positions[1], predicate, reverse);
+		positions[2] = orderBy(positions[2], predicate, reverse);
+		
+		
 	}
 
 }]);
@@ -119,6 +123,7 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 		}
 	};
 
+	
 	$scope.displayTeam = function(index) {
 		$scope.teamAbbr = $scope.teams[index].abbr;
 		$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+$scope.teamAbbr+'/iphone/clubroster.json')
@@ -127,11 +132,12 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
   			var games = response; 
   			$scope.positions = [games.goalie, games.forwards, games.defensemen]; 
   			$scope.position = $scope.positions[0];
+
   			$scope.havePlayers = true; 
   			$scope.teamIndex = index;
-  			console.log($scope.havePlayers);
   			$scope.logoUrl = 'http://1.cdn.nhle.com/'+$scope.getShortName($scope.teamName)+'/images/logos/large.png';
   			$scope.getStats($scope.teamAbbr);
+  			$scope.$broadcast ('loadTeam');
   		});
 	};
 
@@ -189,19 +195,23 @@ app.controller('tabsCtrl', function($scope, $http) {
 	};
 	$scope.setTabStats = function(activeTab) {
 		statsTab = activeTab;
-		$scope.$parent.position = $scope.$parent.positions[activeTab - 1];
+		
 	};
 	$scope.isSetSort = function(checkTab) {
 		return sortTab === checkTab;
 	};
 	$scope.setTabSort = function(activeTab) {
 		sortTab = activeTab;
-		$scope.$parent.position = $scope.$parent.positions[activeTab - 1];
+		$scope.$parent.position = $scope.$parent.positions[positionsTab-1];
 	};
 	$scope.getPosition = function() {
 		return $scope.$parent.position;
 	};
-		
+	$scope.$on('loadTeam', function(e) {  
+		positionsTab = 1;
+		sortTab = 1;         
+    });
+	
 	
 });	
 
