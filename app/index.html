@@ -22,32 +22,7 @@
 				<div id="main-text" ng-click="setPage(1)" ng-class="{activeTab: isSetPage(1)}">Choose your team</div>
 				<div id="main-text" ng-click="setPage(2)" ng-class="{activeTab: isSetPage(2)}">Best players</div>
 				<div id="main-text" ng-click="setPage(3)" ng-class="{activeTab: isSetPage(3)}">Search</div></br>
-				<div id="teamNav">
-					<a shape="rect" ng-repeat= "team in teams" ng-class="team.abbr" ng-click="displayTeam($index)"></a>
-				</div>
-				<div id="chosenTeam" ng-show="havePlayers" ng-init="displayTeam(0)" ng-click="displayTeam((teamIndex+1)%30)">{{teamName}}</div>
-				<div ng-show="havePlayers" ng-controller="tabsCtrl">	
-					<div class="nav" id="playersNav">
-						<div ng-click="setTabPosition(1)" ng-class="{activeTab: isSetPosition(1)}">Goalies</div>
-						<div ng-click="setTabPosition(3)" ng-class="{activeTab: isSetPosition(3)}">Defensemen</div>
-						<div ng-click="setTabPosition(2)" ng-class="{activeTab: isSetPosition(2)}">Forwards</div>
-					</div>
-					<div class="nav" id="statsNav">
-						<div ng-click="setTabStats(1)" ng-class="{activeTab: isSetStats(1)}"  >Show Stats</div >
-						<div ng-click="setTabStats(2)" ng-class="{activeTab: isSetStats(2)}" >Hide Stats</div >
-					</div>
-					<div ng-controller="sortCtrl">
-						<div class="nav" id="filtersNav"      >
-							<div  ng-click="reverseAge = !reverseAge; order('age', reverseAge, positions); setTabSort(1)" ng-class="{activeTab: isSetSort(1)}">Age</div >
-							<div  ng-click="reverseName = !reverseName; order('name', reverseName, positions); setTabSort(2)" ng-class="{activeTab: isSetSort(2)}">Name</div >
-							<div   ng-click="reverseWeight = !reverseWeight; order('weight', reverseWeight, positions); setTabSort(3)" ng-class="{activeTab: isSetSort(3)}">Weight</div >
-							<div  ng-click="reverseHeight = !reverseHeight; order('height', reverseHeight, positions); setTabSort(4)" ng-class="{activeTab: isSetSort(4)}">Height</div >	
-						</div>
-						</br></br></br>
-						<players></players>
-					</div>
-				</div>
-			</div>	
+				<playersnav></playersnav>	
 		</div>	
 	</div>
 	<script src="scripts/app.js"></script>

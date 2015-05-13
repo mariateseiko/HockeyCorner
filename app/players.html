@@ -1,6 +1,6 @@
-<div class="playerProfile"  ng-show="havePlayers" >
+<div class="playerProfile"  ng-show="havePlayers"  >
 	<ul style="list-style-type: none; padding-left: 0" >
-		<li  ng-repeat="x in position"   >
+		<li  ng-repeat="x in getPosition()"   >
  			<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
  			<div class="playerHeader">
  				<img class="teamLogo" src={{logoUrl}}>

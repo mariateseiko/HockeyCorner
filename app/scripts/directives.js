@@ -13,3 +13,10 @@ app.directive("stats", function() {
 		templateUrl: "./stats.html"
 	}
 });
+
+app.directive("playersnav", function() {
+	return {
+		restrict: "E",
+		templateUrl: "./playersnav.html"
+	}
+});
