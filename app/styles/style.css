@@ -11,16 +11,27 @@ body {
 	font-family: 'Lato', sans-serif; 
 	font-size: 30px;  line-height: 25px;
 	text-align: center;
-	margin: 20px auto 0px auto;	background: #B2A99A;
+	margin-top: 20px; 
+	float: left;/*auto 0px auto;	*/background: #B2A99A;
 	border-radius: 6px;
+	margin-right: 10px;
 	color: #4C463E;
 	padding: 15px;
 	font-weight: 600;
 	letter-spacing: -1px;
-	width: 300px;
+	width: 280px;
+	margin-bottom: 20px;
 }
-
+#main-text:last-child {
+	float: none;
+	margin-right: 0px;
+}
+#main-text.activeTab {
+	color: #B2A99A;
+	background: #4C463E;
+}
 #teamNav {
+	clear: left;
 	background-image: url(../images/teamsNav.png);
 	background-repeat: no-repeat;
 	height: 30px;

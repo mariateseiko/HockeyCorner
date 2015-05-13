@@ -215,3 +215,12 @@ app.controller('tabsCtrl', function($scope, $http) {
 	
 });	
 
+app.controller('pagesCtrl', function($scope, $http) {
+	var pageTab = 1;
+	$scope.isSetPage = function(checkPage) {
+		return pageTab === checkPage;
+	};
+	$scope.setPage = function(page) {
+		pageTab = page;
+	}
+});
