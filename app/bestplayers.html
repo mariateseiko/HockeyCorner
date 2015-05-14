@@ -1,18 +1,40 @@
-<div class="playerProfile"   ng-controller="bestCtrl" style="clear: both">
+<div ng-controller="bestCtrl">
+
+<div class="nav" id="bestNav" style="margin-top: 0px; margin-bottom: 15px">
+		<div ng-click="setBestTab(0)" ng-class="{activeTab: isSetBestTab(0)}">Points</div>
+		<div ng-click="setBestTab(1)" ng-class="{activeTab: isSetBestTab(1)}">Goals</div>
+		<div ng-click="setBestTab(2)" ng-class="{activeTab: isSetBestTab(2)}">Assists</div>
+		<div ng-click="setBestTab(3)" ng-class="{activeTab: isSetBestTab(3)}">+/-</div>
+		<div ng-click="setBestTab(4)" ng-class="{activeTab: isSetBestTab(4)}">Wins</div>
+		<div ng-click="setBestTab(5)" ng-class="{activeTab: isSetBestTab(5)}">GAA</div>
+		<div ng-click="setBestTab(6)" ng-class="{activeTab: isSetBestTab(6)}">Save percentage</div>
+		<div ng-click="setBestTab(7)" ng-class="{activeTab: isSetBestTab(7)}">Shutout</div>
+
+</div>
+
+<div class="playerProfile"    style="clear: both">
 	<ul style="list-style-type: none; padding-left: 0" >
 		<li  ng-repeat="x in best"   >
  			<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
-<div class="playerHeader">
-	<img class="teamLogo" src={{x.logoUrl}}>
-	<div class="playerName"> 
-		<div>{{ x.name}}</div>
-		<div class="playerBaseInfo">{{x.teamName}}{{ x.position}}</div>
-	</div>
-</div>
+			<div class="playerHeader">
+				<img class="teamLogo" src={{x.logoUrl}}>
+				<div class="playerName"> 
+				<div style="float: right; font-size: 45px">{{$index + 1}}</div>
+					<div>{{ x.name}}</div>
+
+					<div class="playerBaseInfo">{{x.teamName}}{{ x.position}}</div>
+				</div>
+
+			</div>
+			<div style="float: right; font-size: 70px; margin-right: 25px; margin-top: 20px">{{displayNumber(x)}}</div>
  			<div class="playerInfo">
+
 	 			<playerinfo></playerinfo>
+
 	 			<stats></stats>
  			</div>			
 		</li>
 	</ul>
 </div >
+
+</div>

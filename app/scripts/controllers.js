@@ -173,6 +173,20 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
   			$scope.connectStatsToPlayers(positions, $scope.playersStats, $scope.goalieStats, teamAbbr);
   		});
 	}
+
+	$scope.setZero = function(positions) {
+		var goalieKeys = ["num", "pos", "name", "GP", "W", "L", "OT", "GA", "SA", "SV", "SVpc", "GAA", "SO", "PIM", "MIN"];
+		var skatersKeys = ["num", "pos", "name", "GP", "G", "A", "P", "PM", "PIM", "S", "TOI", "PP", "SH", "GWG", "OT"];
+		for (var i = 0; i < positions[0].length; i++)
+			for (var j = 3; j < goalieKeys.length; j++)
+				positions[0][i][goalieKeys[j]] = 0;
+						
+		for (var l = 1; l <= 2; l++)
+			for (var i = 0; i < positions[l].length; i++)
+				for (var k = 3; k < skatersKeys.length; k++)
+					positions[l][i][skatersKeys[k]] = 0;
+	}
+
 	$scope.getAll = function() {
 		$scope.allTeams = [];
 		angular.forEach($scope.teams, function(team){
@@ -184,11 +198,15 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
   			});
 		});
 		angular.forEach($scope.teams, function(team){
-				$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/playerstatsline/20142015/2/'+team.abbr+'/iphone/playerstatsline.json')
+				$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/playerstatsline/20142015/3/'+team.abbr+'/iphone/playerstatsline.json')
   			.success(function (response) {
-	  			$scope.playersStats = response.skaterData;
-	  			$scope.goalieStats = response.goalieData;
-	  			$scope.connectStatsToPlayers($scope.allTeams[team.abbr], $scope.playersStats, $scope.goalieStats);
+  				if (response.skaterData.length == 0) 
+  					$scope.setZero($scope.allTeams[team.abbr]);
+  				else {
+	  				$scope.playersStats = response.skaterData;
+	  				$scope.goalieStats = response.goalieData;
+	  				$scope.connectStatsToPlayers($scope.allTeams[team.abbr], $scope.playersStats, $scope.goalieStats);
+	  			}	
   			});
   		});
   		
@@ -248,15 +266,12 @@ app.controller('pagesCtrl', function($scope, $http) {
 });
 
 app.controller('bestCtrl', function($scope, $http) {
-	var bestTab = 1;
+	var bestTab = 0;
 	$scope.isSetBestTab = function(tab) {
 		return bestTab === tab;
 	};
 
-	$scope.setBestTab = function(tab) {
-		bestTab = tab;
-		displayBest(tab);
-	};
+	
 
 	var categories = ["points", "goals", "assists", "plusminus", "wins", "gaa", "savepercentage", "shutouts"];
 	$scope.best = [];
@@ -299,59 +314,27 @@ app.controller('bestCtrl', function($scope, $http) {
   			
   		};	
   		  
-
+$scope.setBestTab = function(tab) {
+		bestTab = tab;
+		$scope.displayBest(tab);
+};
     
+$scope.displayNumber = function(player) {
+	switch(bestTab) {
+		case 0: return player.P;
+		case 1: return player.G;
+		case 2: return player.A;
+		case 3: return player.PM;
+		case 4: return player.W;
+		case 5: return player.GAA;
+		case 6: return player.SVpc;
+		case 7: return player.SO;
+	}
+}
 
 	$scope.$on('showBest', function(e) {  
-		/*positionsTab = 1;*/
+		bestTab = 0;
 		$scope.displayBest(0);   
 });
-	/*
-	$scope.displayBest = function(index) {
-		
-		$scope.allTeams = [];
-		
-		
-  			for (i = 0; i < response.skaterData.length; i++) {
-  				var teamName = response.skaterData[i].data.split(",")[1].substr(1); 
-  				
-  				var id = response.skaterData[i].id;
-  				$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+teamName+'/iphone/clubroster.json')
-		  			.success(function (games) {
-		  					
-		  				var response = games;
-		  				//$scope.allTeams[teamName]=[];
-		  				//$scope.allTeams[teamName]["goalies"] = response.goalie;
-		  				//$scope.allTeams[teamName]["forwards"] = response.forwards;
-		  				//$scope.allTeams[teamName]["defensemen"] = response.defensemen;
-
-		  				 
-		  				 
-		  				$scope.teamPositions = [response.goalie, response.forwards, response.defensemen] ;
-		  			
-  				
-		  		//console.log($scope.getPositions(teamName));
-		  		//console.log($scope.allTeams[teamName]);
-		  		//var teamPositions = [/*$scope.allTeams[teamName]["goalies"],$scope.allTeams[teamName]["defensemen"], $scope.allTeams[teamName]["defensemen"], $scope.allTeams[teamName]["forwards"]];
-		  		//console.log($scope.teamPositions.length);
-		  		$scope.$parent.getStats(teamName, $scope.teamPositions);
-		  		
-		  		for (j = 0; j < 3; j++) {
-		  			var position = $scope.teamPositions[j];
-		  			for (k = 0; k < position.length; k++) {
-		  				if (position[k].id == id) {
-		  									
-		  					$scope.best[i] = $scope.teamPositions[j][k];
-		  					console.log($scope.best);
-		  					
-		  				}
-		  			}
-		  		}
-});
-  			}
-  			console.log($scope.best);
-  			console.log("3");
-  		});
-
-	};*/
+	
 });

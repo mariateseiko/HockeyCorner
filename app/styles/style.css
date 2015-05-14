@@ -96,6 +96,10 @@ body {
 	width: 323px;
 	margin-right: 0px;
 }
+
+#bestNav {
+	width: 925px;
+}
 #header {
 	background: #FFF;
 	height: 75px;
