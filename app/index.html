@@ -20,9 +20,10 @@
 		<div  ng-controller="playersCtrl" >
 			<div ng-controller="pagesCtrl">
 				<div id="main-text" ng-click="setPage(1)" ng-class="{activeTab: isSetPage(1)}">Choose your team</div>
-				<div id="main-text" ng-click="setPage(2)" ng-class="{activeTab: isSetPage(2)}">Best players</div>
+				<div id="main-text" ng-click="setPage(2); showBest()" ng-class="{activeTab: isSetPage(2)}">Best players</div>
 				<div id="main-text" ng-click="setPage(3)" ng-class="{activeTab: isSetPage(3)}">Search</div></br>
-				<playersnav></playersnav>	
+				<playersnav ng-show="isSetPage(1)"></playersnav>	
+				<bestplayers ng-show="isSetPage(2)"></bestplayers>
 		</div>	
 	</div>
 	<script src="scripts/app.js"></script>

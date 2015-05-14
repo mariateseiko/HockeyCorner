@@ -125,22 +125,13 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 
 	
 	$scope.displayTeam = function(index) {
-		$scope.teamAbbr = $scope.teams[index].abbr;
-		$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+$scope.teamAbbr+'/iphone/clubroster.json')
-  		.success(function (response) {
-  			$scope.teamName = $scope.teams[index].name;
-			var games = response; 
-  			$scope.positions = [games.goalie, games.forwards, games.defensemen]; 
-  			$scope.position = $scope.positions[0];
-  			console.log($scope.position);
-  			$scope.havePlayers = true; 
-  			$scope.teamIndex = index;
-  			$scope.logoUrl = 'http://1.cdn.nhle.com/'+$scope.getShortName($scope.teamName)+'/images/logos/large.png';
-  			$scope.getStats($scope.teamAbbr);
-  			$scope.$broadcast ('loadTeam');
-  			
-
-  		});
+		$scope.positions = $scope.allTeams[$scope.teams[index].abbr];
+		$scope.position = $scope.positions[0];
+		$scope.havePlayers = true; 
+		$scope.teamIndex = index;
+		$scope.teamName = $scope.teams[index].name;
+		$scope.logoUrl = 'http://1.cdn.nhle.com/'+$scope.getShortName($scope.teamName)+'/images/logos/large.png';
+		$scope.$broadcast ('loadTeam');
 	};
 
 	$scope.getPosition = function() {
@@ -155,7 +146,7 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 				if (positions[0][i].id == goalies[j].id) {
 					var data = goalies[j].data;
 					var stats = data.split(",");
-					console.log(stats);
+					
 					for (var k = 3; k < goalieKeys.length; k++)
 						positions[0][i][goalieKeys[k]] = stats[k];
 					break;
@@ -171,18 +162,37 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 
 					break;
 				}
+
 	}
 
-	$scope.getStats = function(teamAbbr) {
+	$scope.getStats = function(teamAbbr, positions) {
 		$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/playerstatsline/20142015/2/'+teamAbbr+'/iphone/playerstatsline.json')
   		.success(function (response) {
   			$scope.playersStats = response.skaterData;
   			$scope.goalieStats = response.goalieData;
-  			$scope.connectStatsToPlayers($scope.positions, $scope.playersStats, $scope.goalieStats);
+  			$scope.connectStatsToPlayers(positions, $scope.playersStats, $scope.goalieStats, teamAbbr);
   		});
-	}	
-
-	
+	}
+	$scope.getAll = function() {
+		$scope.allTeams = [];
+		angular.forEach($scope.teams, function(team){
+				$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+team.abbr+'/iphone/clubroster.json')
+  			.success(function (response) {
+	  			var games = response; 
+	  			$scope.positions = [games.goalie, games.forwards, games.defensemen]; 
+	  			$scope.allTeams[team.abbr] = $scope.positions;
+  			});
+		});
+		angular.forEach($scope.teams, function(team){
+				$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/playerstatsline/20142015/2/'+team.abbr+'/iphone/playerstatsline.json')
+  			.success(function (response) {
+	  			$scope.playersStats = response.skaterData;
+	  			$scope.goalieStats = response.goalieData;
+	  			$scope.connectStatsToPlayers($scope.allTeams[team.abbr], $scope.playersStats, $scope.goalieStats);
+  			});
+  		});
+  		
+	};
 }]);	
 
 app.controller('tabsCtrl', function($scope, $http) {
@@ -225,18 +235,123 @@ app.controller('tabsCtrl', function($scope, $http) {
 
 app.controller('pagesCtrl', function($scope, $http) {
 	var pageTab = 1;
-	var show = [true, false, false];
-	setToFalse = function() {
-		for (i = 0; i < show.length; i++) {
-        	show[i] = false;
-    	}
-	};
 	$scope.isSetPage = function(checkPage) {
 		return pageTab === checkPage;
 	};
 	$scope.setPage = function(page) {
 		pageTab = page;
-		this.setToFalse();
-		show[page] = true;
 	};
+	$scope.showBest = function() {
+		$scope.$broadcast ('showBest');
+	}
+
+});
+
+app.controller('bestCtrl', function($scope, $http) {
+	var bestTab = 1;
+	$scope.isSetBestTab = function(tab) {
+		return bestTab === tab;
+	};
+
+	$scope.setBestTab = function(tab) {
+		bestTab = tab;
+		displayBest(tab);
+	};
+
+	var categories = ["points", "goals", "assists", "plusminus", "wins", "gaa", "savepercentage", "shutouts"];
+	$scope.best = [];
+
+	$scope.getFullName = function(teams, value) {
+		for (var i = 0, len = teams.length; i < len; i++) {
+    		if (teams[i].abbr == value) return teams[i].name;
+  		}
+	}
+
+	
+
+	$scope.displayBest = function(index) {
+		var category = categories[index];
+		$scope.best=[];
+		$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/leagueleaders/iphone/'+category+'/leagueleaders.json')
+  		.success(function (response) {
+  			for (i = 0; i < response.skaterData.length; i++) {
+				var playerid = response.skaterData[i].id;
+				//console.log(playerid);
+				var teamName = response.skaterData[i].data.split(",")[1].substr(1);  
+
+				players:
+				
+					for (j = 0; j < 3; j++)
+						for (k = 0; k < $scope.$parent.allTeams[teamName][j].length; k++){
+							if ($scope.$parent.allTeams[teamName][j][k].id === playerid) {
+								$scope.$parent.allTeams[teamName][j][k].logoUrl = 'http://1.cdn.nhle.com/'+$scope.$parent.getShortName($scope.getFullName($scope.$parent.teams, teamName))+'/images/logos/large.png';
+								$scope.$parent.allTeams[teamName][j][k].teamName = $scope.getFullName($scope.$parent.teams, teamName);
+								$scope.best.push($scope.$parent.allTeams[teamName][j][k]);
+								//console.log($scope.best);
+								break players ;
+							}
+
+							
+						}
+
+			}
+  			});
+  			
+  		};	
+  		  
+
+    
+
+	$scope.$on('showBest', function(e) {  
+		/*positionsTab = 1;*/
+		$scope.displayBest(0);   
+});
+	/*
+	$scope.displayBest = function(index) {
+		
+		$scope.allTeams = [];
+		
+		
+  			for (i = 0; i < response.skaterData.length; i++) {
+  				var teamName = response.skaterData[i].data.split(",")[1].substr(1); 
+  				
+  				var id = response.skaterData[i].id;
+  				$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/teamroster/'+teamName+'/iphone/clubroster.json')
+		  			.success(function (games) {
+		  					
+		  				var response = games;
+		  				//$scope.allTeams[teamName]=[];
+		  				//$scope.allTeams[teamName]["goalies"] = response.goalie;
+		  				//$scope.allTeams[teamName]["forwards"] = response.forwards;
+		  				//$scope.allTeams[teamName]["defensemen"] = response.defensemen;
+
+		  				 
+		  				 
+		  				$scope.teamPositions = [response.goalie, response.forwards, response.defensemen] ;
+		  			
+  				
+		  		//console.log($scope.getPositions(teamName));
+		  		//console.log($scope.allTeams[teamName]);
+		  		//var teamPositions = [/*$scope.allTeams[teamName]["goalies"],$scope.allTeams[teamName]["defensemen"], $scope.allTeams[teamName]["defensemen"], $scope.allTeams[teamName]["forwards"]];
+		  		//console.log($scope.teamPositions.length);
+		  		$scope.$parent.getStats(teamName, $scope.teamPositions);
+		  		
+		  		for (j = 0; j < 3; j++) {
+		  			var position = $scope.teamPositions[j];
+		  			for (k = 0; k < position.length; k++) {
+		  				if (position[k].id == id) {
+		  									
+		  					$scope.best[i] = $scope.teamPositions[j][k];
+		  					console.log($scope.best);
+		  					
+		  				}
+		  			}
+		  		}
+});
+  			}
+  			console.log($scope.best);
+  			console.log("3");
+  		});
+
+	};*/
 });

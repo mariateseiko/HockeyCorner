@@ -1,36 +1,10 @@
-<div class="playerProfile"  ng-show="havePlayers"  >
+<div class="playerProfile"  ng-show="havePlayers" style="margin-top: 35px" >
 	<ul style="list-style-type: none; padding-left: 0" >
 		<li  ng-repeat="x in getPosition()"   >
- 			<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
- 			<div class="playerHeader">
- 				<img class="teamLogo" src={{logoUrl}}>
- 				<div class="playerName"> 
- 					<div>{{ x.name}}</div>
- 					<div class="playerBaseInfo">{{teamName}} {{x.position}}</div>
- 				</div>
- 			</div>
+ 			<playerheader></playerheader>
  			<div class="playerInfo">
- 			<table style="float:left">
- 			<tr >
- 				<td class="label">NUMBER</td>
- 				<td class="value" style="width: 45px">{{x.number}}</td>
- 				<td class="label" >BIRTHPLACE</td>
- 				<td class="value" style="width: 200px">{{x.birthplace}}</td>
- 			</tr>
- 			<tr >
- 				<td class="label">HEIGT</td>
- 				<td class="value" style="width: 45px">{{x.height}}</td>
- 				<td class="label">BIRTHDATE</td>
- 				<td class="value" style="width: 200px">{{x.birthdate}}</td>
- 			</tr>
- 			<tr >
- 				<td class="label">WEIGHT</td>
- 				<td class="value" style="width: 45px">{{x.weight}}</td>
- 				<td class="label">AGE</td>
- 				<td class="value" style="width: 200px">{{x.age}}</td>
- 			</tr>
- 			</table>
- 			<stats></stats>
+	 			<playerinfo></playerinfo>
+	 			<stats></stats>
  			</div>			
 		</li>
 	</ul>

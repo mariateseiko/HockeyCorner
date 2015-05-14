@@ -1,0 +1,18 @@
+<div class="playerProfile"   ng-controller="bestCtrl" style="clear: both">
+	<ul style="list-style-type: none; padding-left: 0" >
+		<li  ng-repeat="x in best"   >
+ 			<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
+<div class="playerHeader">
+	<img class="teamLogo" src={{x.logoUrl}}>
+	<div class="playerName"> 
+		<div>{{ x.name}}</div>
+		<div class="playerBaseInfo">{{x.teamName}}{{ x.position}}</div>
+	</div>
+</div>
+ 			<div class="playerInfo">
+	 			<playerinfo></playerinfo>
+	 			<stats></stats>
+ 			</div>			
+		</li>
+	</ul>
+</div >

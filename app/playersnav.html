@@ -1,7 +1,7 @@
 <div id="teamNav" >
 	<a shape="rect" ng-repeat= "team in teams" ng-class="team.abbr" ng-click="displayTeam($index)"></a>
 </div>
-<div id="chosenTeam" ng-show="havePlayers" ng-init="displayTeam(0)" ng-click="displayTeam((teamIndex+1)%30)">{{teamName}}</div>
+<div id="chosenTeam" ng-show="havePlayers" ng-init="getAll()" ng-click="displayTeam((teamIndex+1)%30)">{{teamName}}</div>
 <div ng-show="havePlayers" ng-controller="tabsCtrl">	
 	<div class="nav" id="playersNav">
 		<div ng-click="setTabPosition(1)" ng-class="{activeTab: isSetPosition(1)}">Goalies</div>
