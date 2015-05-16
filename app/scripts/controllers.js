@@ -9,10 +9,15 @@ app.controller('sortCtrl', ['$scope', '$filter', function($scope, $filter) {
 	$scope.order = function( predicate, reverse, positions) {
 		positions[0] = orderBy(positions[0], predicate, reverse);
 		positions[1] = orderBy(positions[1], predicate, reverse);
-		positions[2] = orderBy(positions[2], predicate, reverse);
-		
-		
+		positions[2] = orderBy(positions[2], predicate, reverse);	
 	}
+}]);
+
+app.controller('searchCtrl', ['$filter', function ($filter) {
+	$scope.find = function(findText) {
+		var filterdData = $filter('filter')($scope.$parent.allTeams, text);
+		$scope.search = filterData;
+	};
 
 }]);
 
@@ -141,28 +146,45 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 	$scope.connectStatsToPlayers = function(positions, skaters, goalies) {
 		var goalieKeys = ["num", "pos", "name", "GP", "W", "L", "OT", "GA", "SA", "SV", "SVpc", "GAA", "SO", "PIM", "MIN"];
 		var skatersKeys = ["num", "pos", "name", "GP", "G", "A", "P", "PM", "PIM", "S", "TOI", "PP", "SH", "GWG", "OT"];
-		for (var i = 0; i < positions[0].length; i++)
-			for (var j = 0; j < goalies.length; j++)
+
+		for (var i = 0; i < positions[0].length; i++) {
+			
+			var found = false;
+			for (var j = 0; j < goalies.length; j++) {
 				if (positions[0][i].id == goalies[j].id) {
 					var data = goalies[j].data;
-					var stats = data.split(",");
-					
+					var stats = data.split(",");		
 					for (var k = 3; k < goalieKeys.length; k++)
 						positions[0][i][goalieKeys[k]] = stats[k];
+					found = true;
 					break;
 				}
+			}
+			
+			if (!found)
+				for (var k = 3; k < skatersKeys.length; k++)
+						positions[0][i][goalieKeys[k]] = 0;
+		}
+
 		for (var l = 1; l <= 2; l++)
-		for (var i = 0; i < positions[l].length; i++)
-			for (var j = 0; j < skaters.length; j++)
-				if (positions[l][i].id == skaters[j].id) {
-					var data = skaters[j].data;
-					var stats = data.split(",");
-					for (var k = 3; k < skatersKeys.length; k++)
-						positions[l][i][skatersKeys[k]] = stats[k];
-
-					break;
-				}
-
+			
+			for (var i = 0; i < positions[l].length; i++) {
+				found = false;
+				for (var j = 0; j < skaters.length; j++)
+					if (positions[l][i].id == skaters[j].id) {
+						var data = skaters[j].data;
+						var stats = data.split(",");
+						for (var k = 3; k < skatersKeys.length; k++)
+							positions[l][i][skatersKeys[k]] = stats[k];
+						found = true;
+					    break;
+					}
+					if(!found)
+				for (var k = 3; k < skatersKeys.length; k++)
+							positions[l][i][skatersKeys[k]] = 0;
+			}
+			
+		
 	}
 
 	$scope.getStats = function(teamAbbr, positions) {
@@ -254,7 +276,7 @@ app.controller('tabsCtrl', function($scope, $http) {
 app.controller('pagesCtrl', function($scope, $http) {
 	var pageTab = 1;
 	$scope.isSetPage = function(checkPage) {
-		return pageTab === checkPage;
+		return pageTab == checkPage;
 	};
 	$scope.setPage = function(page) {
 		pageTab = page;
