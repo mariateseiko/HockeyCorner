@@ -13,12 +13,23 @@ app.controller('sortCtrl', ['$scope', '$filter', function($scope, $filter) {
 	}
 }]);
 
-app.controller('searchCtrl', ['$filter', function ($filter) {
+app.controller('searchCtrl', ['$scope', '$filter', function($scope, $filter) {
 	$scope.find = function(findText) {
-		var filterdData = $filter('filter')($scope.$parent.allTeams, text);
-		$scope.search = filterData;
+		$scope.search = [];
+		for (var i = 0; i < $scope.$parent.teams.length; i++) {
+			team = $scope.$parent.teams[i];
+			for (var j = 0; j < $scope.$parent.allTeams[team.abbr].length; j++) {
+				var filteredData = $filter('filter')($scope.$parent.allTeams[team.abbr][j], findText);
+				for (var k = 0; k < filteredData.length; k++) {
+					if (filteredData[k] != []) {
+						filteredData[k].logoUrl = 'http://1.cdn.nhle.com/'+$scope.$parent.getShortName(team.name)+'/images/logos/large.png';
+						filteredData[k].teamName = team.name;
+						$scope.search.push(filteredData[k]);
+					}
+				}	
+			}
+		}
 	};
-
 }]);
 
 app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
@@ -127,8 +138,6 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 				return lastWord;
 		}
 	};
-
-	
 	$scope.displayTeam = function(index) {
 		$scope.positions = $scope.allTeams[$scope.teams[index].abbr];
 		$scope.position = $scope.positions[0];
@@ -138,17 +147,13 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 		$scope.logoUrl = 'http://1.cdn.nhle.com/'+$scope.getShortName($scope.teamName)+'/images/logos/large.png';
 		$scope.$broadcast ('loadTeam');
 	};
-
 	$scope.getPosition = function() {
 		return $scope.position;
 	}
-
 	$scope.connectStatsToPlayers = function(positions, skaters, goalies) {
 		var goalieKeys = ["num", "pos", "name", "GP", "W", "L", "OT", "GA", "SA", "SV", "SVpc", "GAA", "SO", "PIM", "MIN"];
 		var skatersKeys = ["num", "pos", "name", "GP", "G", "A", "P", "PM", "PIM", "S", "TOI", "PP", "SH", "GWG", "OT"];
-
-		for (var i = 0; i < positions[0].length; i++) {
-			
+		for (var i = 0; i < positions[0].length; i++) {			
 			var found = false;
 			for (var j = 0; j < goalies.length; j++) {
 				if (positions[0][i].id == goalies[j].id) {
@@ -159,15 +164,12 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 					found = true;
 					break;
 				}
-			}
-			
+			}	
 			if (!found)
 				for (var k = 3; k < skatersKeys.length; k++)
 						positions[0][i][goalieKeys[k]] = 0;
 		}
-
-		for (var l = 1; l <= 2; l++)
-			
+		for (var l = 1; l <= 2; l++)	
 			for (var i = 0; i < positions[l].length; i++) {
 				found = false;
 				for (var j = 0; j < skaters.length; j++)
@@ -182,11 +184,8 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 					if(!found)
 				for (var k = 3; k < skatersKeys.length; k++)
 							positions[l][i][skatersKeys[k]] = 0;
-			}
-			
-		
+			}	
 	}
-
 	$scope.getStats = function(teamAbbr, positions) {
 		$http.get('https://cors-anywhere.herokuapp.com/http://nhlwc.cdnak.neulion.com/fs1/nhl/league/playerstatsline/20142015/2/'+teamAbbr+'/iphone/playerstatsline.json')
   		.success(function (response) {
@@ -195,7 +194,6 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
   			$scope.connectStatsToPlayers(positions, $scope.playersStats, $scope.goalieStats, teamAbbr);
   		});
 	}
-
 	$scope.setZero = function(positions) {
 		var goalieKeys = ["num", "pos", "name", "GP", "W", "L", "OT", "GA", "SA", "SV", "SVpc", "GAA", "SO", "PIM", "MIN"];
 		var skatersKeys = ["num", "pos", "name", "GP", "G", "A", "P", "PM", "PIM", "S", "TOI", "PP", "SH", "GWG", "OT"];
@@ -208,7 +206,6 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 				for (var k = 3; k < skatersKeys.length; k++)
 					positions[l][i][skatersKeys[k]] = 0;
 	}
-
 	$scope.getAll = function() {
 		$scope.allTeams = [];
 		angular.forEach($scope.teams, function(team){
@@ -230,8 +227,7 @@ app.controller('playersCtrl', ['$scope','$http', function($scope, $http) {
 	  				$scope.connectStatsToPlayers($scope.allTeams[team.abbr], $scope.playersStats, $scope.goalieStats);
 	  			}	
   			});
-  		});
-  		
+  		}); 		
 	};
 }]);	
 
@@ -267,10 +263,7 @@ app.controller('tabsCtrl', function($scope, $http) {
 		/*positionsTab = 1;*/
 		$scope.setTabPosition(1);
 		sortTab = 1;       
-
-    });
-	
-	
+    });	
 });	
 
 app.controller('pagesCtrl', function($scope, $http) {
@@ -284,7 +277,6 @@ app.controller('pagesCtrl', function($scope, $http) {
 	$scope.showBest = function() {
 		$scope.$broadcast ('showBest');
 	}
-
 });
 
 app.controller('bestCtrl', function($scope, $http) {
@@ -292,9 +284,6 @@ app.controller('bestCtrl', function($scope, $http) {
 	$scope.isSetBestTab = function(tab) {
 		return bestTab === tab;
 	};
-
-	
-
 	var categories = ["points", "goals", "assists", "plusminus", "wins", "gaa", "savepercentage", "shutouts"];
 	$scope.best = [];
 
@@ -303,9 +292,6 @@ app.controller('bestCtrl', function($scope, $http) {
     		if (teams[i].abbr == value) return teams[i].name;
   		}
 	}
-
-	
-
 	$scope.displayBest = function(index) {
 		var category = categories[index];
 		$scope.best=[];
@@ -313,50 +299,38 @@ app.controller('bestCtrl', function($scope, $http) {
   		.success(function (response) {
   			for (i = 0; i < response.skaterData.length; i++) {
 				var playerid = response.skaterData[i].id;
-				//console.log(playerid);
 				var teamName = response.skaterData[i].data.split(",")[1].substr(1);  
-
-				players:
-				
+				players:				
 					for (j = 0; j < 3; j++)
 						for (k = 0; k < $scope.$parent.allTeams[teamName][j].length; k++){
 							if ($scope.$parent.allTeams[teamName][j][k].id === playerid) {
 								$scope.$parent.allTeams[teamName][j][k].logoUrl = 'http://1.cdn.nhle.com/'+$scope.$parent.getShortName($scope.getFullName($scope.$parent.teams, teamName))+'/images/logos/large.png';
 								$scope.$parent.allTeams[teamName][j][k].teamName = $scope.getFullName($scope.$parent.teams, teamName);
 								$scope.best.push($scope.$parent.allTeams[teamName][j][k]);
-								//console.log($scope.best);
 								break players ;
 							}
-
-							
 						}
-
 			}
-  			});
-  			
-  		};	
-  		  
-$scope.setBestTab = function(tab) {
-		bestTab = tab;
-		$scope.displayBest(tab);
-};
-    
-$scope.displayNumber = function(player) {
-	switch(bestTab) {
-		case 0: return player.P;
-		case 1: return player.G;
-		case 2: return player.A;
-		case 3: return player.PM;
-		case 4: return player.W;
-		case 5: return player.GAA;
-		case 6: return player.SVpc;
-		case 7: return player.SO;
+  		}); 			
+  	};		  
+	$scope.setBestTab = function(tab) {
+			bestTab = tab;
+			$scope.displayBest(tab);
+	};
+ 	$scope.displayNumber = function(player) {
+		switch(bestTab) {
+			case 0: return player.P;
+			case 1: return player.G;
+			case 2: return player.A;
+			case 3: return player.PM;
+			case 4: return player.W;
+			case 5: return player.GAA;
+			case 6: return player.SVpc;
+			case 7: return player.SO;
+		}
 	}
-}
-
 	$scope.$on('showBest', function(e) {  
 		bestTab = 0;
 		$scope.displayBest(0);   
-});
-	
+	});	
 });

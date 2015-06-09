@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="styles/team-styles.css">
+<script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+</head>
+<body ng-app="hockeyCornerApp">
+	<div id="header">
+		<div class="holder">
+			<div id="title-main">hockey corner</div>
+			<div id="title-secondary">Everything you need to know about hockey </div>
+		</div>
+	</div>
+	<div id="main">
+		<div  ng-controller="playersCtrl" >
+			<div ng-controller="pagesCtrl">
+				<div id="main-text" ng-click="setPage(1)" ng-class="{activeTab: isSetPage(1)}">Choose your team</div>
+				<div id="main-text" ng-click="setPage(2); showBest()" ng-class="{activeTab: isSetPage(2)}">Best players</div>
+				<div id="main-text" ng-click="setPage(3)" ng-class="{activeTab: isSetPage(3)}">Search</div></br>
+				<playersnav ng-show="isSetPage(1)"></playersnav>
+				<bestplayers ng-show="isSetPage(2)"></bestplayers>
+				<searchplayers ng-show="isSetPage(3)"></searchplayers>
+			</div>
+		</div>	
+	</div>
+	<script src="scripts/app.js"></script>
+	<script src="scripts/directives.js"></script>
+	<script src="scripts/controllers.js"></script>
+</body>
+</html>

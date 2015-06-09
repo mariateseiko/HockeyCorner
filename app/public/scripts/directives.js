@@ -3,41 +3,49 @@ var app = angular.module('app-directives',  []);
 app.directive("players", function() {
 	return {
 		restrict: "E",
-		templateUrl: "./players.html"
+		templateUrl: "../views/players.html"
 	}
 });
 
 app.directive("stats", function() {
 	return {
 		restrict: "E",
-		templateUrl: "./stats.html"
+		templateUrl: "../views/stats.html"
 	}
 });
 
 app.directive("playersnav", function() {
 	return {
 		restrict: "E",
-		templateUrl: "./playersnav.html"
+		templateUrl: "../views/playersnav.html"
 	}
 });
 
 app.directive("playerheader", function() {
 	return {
 		restrict: "E",
-		templateUrl: "./playerheader.html"
+		templateUrl: "../views/playerheader.html"
 	}
 });
 
 app.directive("playerinfo", function() {
 	return {
 		restrict: "E",
-		templateUrl: "./playerinfo.html"
+		templateUrl: "../views/playerinfo.html"
 	}
 });
 
 app.directive("bestplayers", function() {
 	return {
 		restrict: "E",
-		templateUrl: "./bestplayers.html"
+		templateUrl: "../views/bestplayers.html"
 	}
 });
+
+app.directive("searchplayers", function() {
+	return {
+		restrict: "E",
+		templateUrl: "../views/search.html"
+	}
+});
+

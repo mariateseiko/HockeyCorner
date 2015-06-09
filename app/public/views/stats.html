@@ -1,4 +1,4 @@
- <table ng-show="isSetStats(1) && isSetPosition(1)"style="float:right">
+ <table ng-show="x.position == 'Goalie'"style="float:right">
  <tr >
  	<td class="label">GP</td>
  	<td class="value">{{x.GP}}</td>
@@ -24,7 +24,7 @@
 	<td class="value">{{x.GAA}}</td>
 </tr>
 </table>
-<table ng-show="isSetStats(1) && !isSetPosition(1)"style="float:right">
+<table ng-show="x.position != 'Goalie'"style="float:right">
  <tr >
  	<td class="label">GP</td>
  	<td class="value">{{x.GP}}</td>

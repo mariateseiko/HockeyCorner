@@ -1,0 +1,28 @@
+<div ng-controller="searchCtrl">
+<div style="text-align: center">
+	<input type="text" ng-model="searchText" class="searchInput" ><div class="label" style="width: 80px; display: inline" ng-click="find(searchText)">Search</div>
+</div>
+	<div class="playerProfile"    style="clear: both">
+		<ul style="list-style-type: none; padding-left: 0" >
+			<li  ng-repeat="x in search"   >
+	 			<div class="playerPhoto"><img  src = {{x.imageUrl}}></div>
+				<div class="playerHeader">
+					<img class="teamLogo" src={{x.logoUrl}}>
+					<div class="playerName"> 
+						<div>{{ x.name}}</div>
+
+						<div class="playerBaseInfo">{{x.teamName}}{{ x.position}}</div>
+					</div>
+
+				</div>
+				<div style="float: right; font-size: 70px; margin-right: 25px; margin-top: 20px">{{displayNumber(x)}}</div>
+	 			<div class="playerInfo">
+
+		 			<playerinfo></playerinfo>
+
+		 			<stats></stats>
+	 			</div>			
+			</li>
+		</ul>
+	</div >
+</div>
